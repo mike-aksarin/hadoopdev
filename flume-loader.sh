@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+cd `dirname $0`
+
 source ./env.sh
 
 echo "Running flume loader at port $NC_PORT"

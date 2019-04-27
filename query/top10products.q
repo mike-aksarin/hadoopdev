@@ -1,7 +1,7 @@
 -- Select top 10 most frequently purchased product in each category
 
-select product_name
+select product_name, count(*) cnt
   from events
   group by product_name
-  order by count(*)
+  order by cnt
   limit 10;
