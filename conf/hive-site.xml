@@ -29,7 +29,11 @@
     </property>
     <property>
         <name>hive.execution.engine</name>
-        <value>spark</value>
+        <value>yarn</value>
+    </property>
+    <property>
+        <name>spark.home</name>
+        <value>/usr/local/spark</value>
     </property>
     <property>
         <name>spark.master</name>
@@ -70,4 +74,13 @@
         <name>spark.yarn.jars</name>
         <value>hdfs://localhost:9000/spark-jars/*</value>
     </property>
+    <!--    <property>-->
+    <!--        <name>hive.server2.thrift.bind.host</name>-->
+    <!--        <value>localhost</value>-->
+    <!--        <description>Bind host on which to run the HiveServer2 Thrift service.</description>-->
+    <!--    </property>-->
+    <!--    <property>-->
+    <!--        <name>hive.metastore.uris</name>-->
+    <!--        <value>thrift://localhost:9083</value>-->
+    <!--    </property>-->
 </configuration>

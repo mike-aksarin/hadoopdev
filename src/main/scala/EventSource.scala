@@ -6,7 +6,7 @@ import java.time.temporal.ChronoUnit
 import java.util.logging.Logger
 import java.util.{Timer, TimerTask}
 
-import com.opencsv.CSVWriter
+import com.opencsv.{CSVWriter, ICSVWriter}
 
 import scala.collection.JavaConverters._
 import scala.util.Random
@@ -40,7 +40,7 @@ object EventSource extends App {
 
   def nextBatch(): String = withWriter { csv =>
     val batch = Array.fill(nextBatchSize)(nextRow())
-    csv.writeAll(batch.toIterable.asJava)
+    csv.writeAll(batch.toIterable.asJava, false)
   }
 
   /** Generate next event as CSV string */
@@ -88,7 +88,11 @@ object EventSource extends App {
 
   def withWriter(block: CSVWriter => Unit): String = {
     val buf = new StringWriter()
-    val writer = new CSVWriter(buf)
+    val writer = new CSVWriter(buf,
+      ICSVWriter.DEFAULT_SEPARATOR,
+      ICSVWriter.NO_QUOTE_CHARACTER,
+      '\\',
+      ICSVWriter.DEFAULT_LINE_END)
     block(writer)
     writer.close()
     buf.getBuffer.toString
