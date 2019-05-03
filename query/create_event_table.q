@@ -12,9 +12,10 @@ row format delimited
   escaped by '\\'
   collection items terminated by '|'
   lines terminated by '\n'
-stored as textfile
+stored as textfile;
+
 --location 'hdfs://quickstart.cloudera:8020/events/';
-location 'hdfs://localhost:9000/events/';
+--location 'hdfs://localhost:9000/events/';
 --tblproperties (
 --    "hive.input.dir.recursive" = "TRUE",
 --    "hive.mapred.supports.subdirectories" = "TRUE",
