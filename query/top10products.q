@@ -3,5 +3,5 @@
 select product_name, count(*) cnt
   from events
   group by product_name
-  sort by cnt desc
+  order by cnt desc
   limit 10;

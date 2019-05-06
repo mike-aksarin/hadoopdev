@@ -3,5 +3,5 @@
  select product_category, count(*) cnt
   from events
   group by product_category
-  sort by cnt desc
+  order by cnt desc
   limit 10;
