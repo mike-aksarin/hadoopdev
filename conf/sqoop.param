@@ -1,0 +1,9 @@
+export
+--connect
+jdbc:postgresql://localhost:5432/hdev
+--username
+hdev
+--password
+hdev
+
+# --verbose
