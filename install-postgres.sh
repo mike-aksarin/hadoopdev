@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 #install postgresql for cloudera-quickstart docker image
 
 yum install postgresql-server

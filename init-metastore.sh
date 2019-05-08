@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 #cat query/init_metastore.sql > sudo -u postgres psql
 
 schematool -dbType postgres -initSchema

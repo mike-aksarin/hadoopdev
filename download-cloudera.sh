@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 #sudo apt-get install docker.io
 
 docker pull cloudera/quickstart:latest
