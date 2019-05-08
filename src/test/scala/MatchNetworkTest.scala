@@ -5,7 +5,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class MatchNetworkTest extends FlatSpec with Matchers {
 
-  def matchNetwork(network: String) = NetworkMatcher(network: String)
+  def matchNetwork(network: String) = NetworkMatcher(network)
 
   it should "pass simple tests" in {
     "192.168.2.1" should    matchNetwork("192.168.2.1")

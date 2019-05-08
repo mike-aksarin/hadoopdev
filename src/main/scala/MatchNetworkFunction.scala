@@ -11,9 +11,7 @@ import scala.reflect.ClassTag
 /** Hive user-defined function to check whether IP v4 address matches subnetwork address */
 class MatchNetworkFunction extends GenericUDF {
 
-  val desc = FunctionDescriptor("match_network",
-    FunctionDescriptor.argument[StringObjectInspector]("ip"),
-    FunctionDescriptor.argument[StringObjectInspector]("network"))
+  private def desc = MatchNetworkFunction.desc
 
   private var argumentInspectors = desc.emptyInspectors
 
@@ -33,7 +31,7 @@ class MatchNetworkFunction extends GenericUDF {
   /** check whether IP v4 address matches subnetwork address */
   def matches(ip: String, network: String): Boolean = {
     val (networkIp, maskLen) = parseNetworkMask(network)
-    val mask = (0xFFFFFFFF00000000L >>> maskLen) & 0xFFFFFFFFL
+    val mask = ((0xFFFFFFFF00000000L >>> maskLen) & 0xFFFFFFFFL).toInt
     (ipToInt(ip) & mask) == (ipToInt(networkIp) & mask)
   }
 
@@ -62,6 +60,12 @@ class MatchNetworkFunction extends GenericUDF {
 
 }
 
+object MatchNetworkFunction {
+  val desc = FunctionDescriptor("match_network",
+    FunctionDescriptor.argument[StringObjectInspector]("ip"),
+    FunctionDescriptor.argument[StringObjectInspector]("network"))
+}
+
 /** Meta info for a user-defined function */
 case class FunctionDescriptor(functionName: String, argumentNames: ArgumentBuilder[ObjectInspector]*) {
 
@@ -70,6 +74,7 @@ case class FunctionDescriptor(functionName: String, argumentNames: ArgumentBuild
   def functionDescStr: String = s"$functionName($argNamesStr)"
   def argNamesStr: String = argumentNames.map(_.argumentName).mkString
   def argLength: Int = argumentNames.length
+
   def emptyInspectors: Array[Option[ObjectInspector]] = Array.fill(argLength)(None)
 
   def validateArguments(argInspectors: Array[ObjectInspector]): Array[Option[ObjectInspector]] = {
@@ -80,7 +85,7 @@ case class FunctionDescriptor(functionName: String, argumentNames: ArgumentBuild
   }
 
   def validateArgumentCount(argInspectors: Array[ObjectInspector]): Unit = {
-    if (argInspectors.length != argumentNames.length) {
+    if (argInspectors.length != argLength) {
       throw new UDFArgumentLengthException(s"`$functionName` takes $argLength arguments: $argNamesStr")
     }
   }
