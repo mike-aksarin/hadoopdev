@@ -6,5 +6,4 @@ echo "Running event source at port $NC_PORT"
 
 sbt compile
 
-sbt -error run | nc localhost $NC_PORT
-
+sbt -error "runMain EventSource" | nc localhost $NC_PORT

@@ -2,6 +2,7 @@
     <property>
         <name>hive.metastore.uris</name>
         <value><!-- No URIs — local mode --></value>
+<!--        <value>thrift://127.0.0.1:9083</value>-->
     </property>
     <property>
         <name>hive.metastore.warehouse.dir</name>

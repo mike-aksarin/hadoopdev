@@ -2,4 +2,4 @@ start-dfs.sh
 
 # hadoop dfsadmin -safemode leave
 
-service hadoop-hdfs-namenode status
+# service hadoop-hdfs-namenode status
