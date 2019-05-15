@@ -26,8 +26,7 @@ object Event {
   val meanPrice = 10000
   val devPrice = 3000
 
-  def parse(line: String): Try[Event] = Try {
-    val row = line.split(",").map(_.trim())
+  def fromRow(row: Array[String]): Try[Event] = Try {
     Event(
       productName = row(0),
       productPrice = (BigDecimal(row(1)) * 100).toLong,

@@ -4,7 +4,7 @@ import java.time.{LocalDate, LocalDateTime, LocalTime}
 import java.time.temporal.ChronoUnit
 import java.util.{Timer, TimerTask}
 
-import com.opencsv.{CSVWriter, ICSVWriter}
+import com.opencsv.ICSVWriter
 
 import scala.collection.JavaConverters._
 import scala.util.Random
@@ -83,13 +83,9 @@ object EventSource extends App {
     values(Random.nextInt(values.length))
   }
 
-  def withWriter(block: CSVWriter => Unit): String = {
+  def withWriter(block: ICSVWriter => Unit): String = {
     val buf = new StringWriter()
-    val writer = new CSVWriter(buf,
-      ICSVWriter.DEFAULT_SEPARATOR,
-      ICSVWriter.NO_QUOTE_CHARACTER,
-      '\\',
-      ICSVWriter.DEFAULT_LINE_END)
+    val writer = OpenCSV.eventWriter(buf)
     block(writer)
     writer.close()
     buf.getBuffer.toString
