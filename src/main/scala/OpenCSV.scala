@@ -29,7 +29,7 @@ object OpenCSV {
       .build()
   }
 
-  def eventFun: String => Array[String] = { line =>
+  def parseEventLine: String => Array[String] = { line =>
     eventParser().parseLine(line)
   }
 
@@ -39,16 +39,9 @@ object OpenCSV {
       .build()
   }
 
-  def countryParser(): ICSVParser = {
-    //new RFC4180ParserBuilder().build()
-    new CSVParserBuilder()
-      .withStrictQuotes(false)
-      .withIgnoreQuotations(true)
-      .withIgnoreLeadingWhiteSpace(true)
-      .build()
-  }
+  def countryParser(): ICSVParser = new RFC4180ParserBuilder().build()
 
-  def countryFun: String => Array[String] = { line =>
+  def parseCountryLine: String => Array[String] = { line =>
     countryParser().parseLine(line)
   }
 
