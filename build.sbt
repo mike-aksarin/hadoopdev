@@ -4,7 +4,7 @@ version := "0.1"
 
 scalaVersion := "2.11.8"
 
-val sparkVersion = "2.4.0"
+val sparkVersion = "2.4.3"
 
 val hiveVersion = "3.1.1"
 
