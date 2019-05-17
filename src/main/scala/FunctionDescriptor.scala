@@ -7,11 +7,6 @@ import org.apache.hadoop.hive.serde2.objectinspector.primitive.StringObjectInspe
 
 import scala.reflect.ClassTag
 
-trait NameDescriptor {
-  def name: String
-  override def toString = name
-}
-
 /** Meta info for a user-defined function */
 case class FunctionDescriptor(functionName: String,
                               argumentNames: ArgumentBuilder[ObjectInspector]*)
