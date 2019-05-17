@@ -22,11 +22,8 @@ object SparkDataFrames extends App {
     writeJdbc(countries, "top_countries")
 
     println(s"Loaded $count events")
-    println(s"\nTop categories:")
     categories.show()
-    println(s"\nTop products:")
     products.show()
-    println(s"\nTop countries:")
     countries.show()
   }
 
@@ -42,7 +39,7 @@ object SparkDataFrames extends App {
     import spark.implicits._
     spark.sparkContext
       .textFile(settings.eventsPath)
-      .map(Event.removeEscapedComma)
+      .map(Settings.removeEscapedComma)
       .toDS()
   }
 
@@ -82,7 +79,7 @@ object SparkDataFrames extends App {
   }
 
   val networkMatch: UserDefinedFunction = {
-    implicit val desc = FunctionDescriptor("network_match")
+    implicit val name = NetworkMaskMatcher.defaultName
     udf((ip: String, mask: String) => NetworkMaskMatcher.matches(ip, mask))
   }
 

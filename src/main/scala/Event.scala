@@ -38,10 +38,6 @@ object Event {
     )
   }
 
-  def removeEscapedComma(line: String): String = {
-    line.replaceAll("\\\\,", "")
-  }
-
   val products = Map(
     "Martin Odersky" -> Array(
       "Scala by Example",

@@ -76,7 +76,7 @@ object SparkRdd extends App {
   }
 
   def countryByIp(ip: InetAddress, countries: Broadcast[Map[String, String]]): String = {
-    implicit val desc = FunctionDescriptor("network_match")
+    implicit val name = NetworkMaskMatcher.defaultName
     countries.value
       .collectFirst {
         case (mask, country) if NetworkMaskMatcher.matches(ip, mask) => country

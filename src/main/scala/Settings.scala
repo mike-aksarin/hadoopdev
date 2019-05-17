@@ -20,3 +20,10 @@ class Settings(args: Array[String]) {
 
   def apply(key: String, default: String): String = properties.getProperty(key, default)
 }
+
+object Settings {
+
+  def removeEscapedComma(line: String): String = {
+    line.replaceAll("\\\\,", "")
+  }
+}

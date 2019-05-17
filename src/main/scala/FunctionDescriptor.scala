@@ -7,9 +7,17 @@ import org.apache.hadoop.hive.serde2.objectinspector.primitive.StringObjectInspe
 
 import scala.reflect.ClassTag
 
-/** Meta info for a user-defined function */
-case class FunctionDescriptor(functionName: String, argumentNames: ArgumentBuilder[ObjectInspector]*) {
+trait NameDescriptor {
+  def name: String
+  override def toString = name
+}
 
+/** Meta info for a user-defined function */
+case class FunctionDescriptor(functionName: String,
+                              argumentNames: ArgumentBuilder[ObjectInspector]*)
+  extends NameDescriptor {
+
+  def name = functionName
   val argumentDesc = argumentNames.map(name => ArgumentDescriptor(name))
 
   def functionDescStr: String = s"$functionName($argNamesStr)"
