@@ -30,7 +30,7 @@ object OpenCSV {
   }
 
   def parseEventLine: String => Array[String] = { line =>
-    eventParser().parseLine(line)
+    eventParser().parseLine(Event.removeEscapedComma(line))
   }
 
   def countryReader(file: File): CSVReader = {

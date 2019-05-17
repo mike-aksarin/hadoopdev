@@ -11,9 +11,11 @@ case class Event(
                   productCategory: String,
                   clientIp: InetAddress
                 ) {
+  def price: BigDecimal = BigDecimal(productPrice) / 100
+
   def toRow = Array(
     productName,
-    (BigDecimal(productPrice) / 100).toString(),
+    price.toString(),
     purchaseDate.format(Event.dateTimeFormat),
     productCategory,
     clientIp.getHostAddress)
@@ -34,6 +36,10 @@ object Event {
       productCategory = row(3),
       clientIp = InetAddress.getByName(row(4))
     )
+  }
+
+  def removeEscapedComma(line: String): String = {
+    line.replaceAll("\\\\,", "")
   }
 
   val products = Map(

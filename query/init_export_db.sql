@@ -27,7 +27,7 @@ grant all on top_products to hdev;
 create table top_countries
 (
   country_name varchar primary key,
-  spent_total bigint
+  spent_total numeric
 );
 
 grant all on top_countries to hdev;
