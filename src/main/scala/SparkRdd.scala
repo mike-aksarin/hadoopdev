@@ -70,9 +70,9 @@ object SparkRdd extends App {
   def topCountries(events: RDD[Event], countries: Broadcast[Map[String, String]]): RDD[(String, BigDecimal)] = {
     events
       .map(purchase => countryByIp(purchase.clientIp, countries) -> purchase.price)
+      .filter(_._1.nonEmpty)
       .aggregateByKey(BigDecimal(0))(_ + _, _ + _)
       .sortBy(_._2, ascending = false)
-
   }
 
   def countryByIp(ip: InetAddress, countries: Broadcast[Map[String, String]]): String = {
@@ -81,7 +81,7 @@ object SparkRdd extends App {
       .collectFirst {
         case (mask, country) if NetworkMaskMatcher.matches(ip, mask) => country
       }
-      .getOrElse("NO COUNTRY")
+      .getOrElse("")
   }
 
 
