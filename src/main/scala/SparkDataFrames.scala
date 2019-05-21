@@ -9,8 +9,7 @@ object SparkDataFrames extends App {
   val settings = new Settings(args)
   val log = Logger.getLogger(SparkDataFrames.getClass.getSimpleName)
 
-  def run(): Unit = {
-    implicit val spark = SparkSession.builder().appName(settings.appName).getOrCreate()
+  def run(): Unit = withSpark { implicit spark =>
     val events = loadEvents().cache()
     val count = events.count()
     val categories = countByField(events, "product_category").cache()
@@ -25,6 +24,14 @@ object SparkDataFrames extends App {
     categories.show()
     products.show()
     countries.show()
+  }
+
+  def withSpark(body: SparkSession => Unit): Unit = {
+    val spark = SparkSession
+      .builder()
+      .appName(settings.appName)
+      .getOrCreate()
+    try body(spark) finally spark.close()
   }
 
   private def loadEvents()(implicit spark: SparkSession): Dataset[EventRow] = {

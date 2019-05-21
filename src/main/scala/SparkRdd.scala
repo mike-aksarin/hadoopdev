@@ -14,16 +14,13 @@ object SparkRdd extends App {
   val settings = new Settings(args)
   val log = Logger.getLogger(SparkRdd.getClass.getSimpleName)
 
-  def run(): Unit = {
-    val conf = new SparkConf().setAppName(settings.appName)
-    val sc = new SparkContext(conf)
+  def run(): Unit = withSpark { sc =>
     val events = parseEvents(sc).cache()
     val countriesByIp = parseCountriesByIp(sc)
     val count = events.count()
     val categories = topCategories(events).take(settings.topSize)
     val products = topProducts(events).take(settings.topSize)
     val countries = topCountries(events, countriesByIp).take(settings.topSize)
-    sc.stop()
     println(s"Loaded $count events")
     println(s"\nTop ${categories.size} categories:\n${categories.mkString("\n")}")
     println(s"\nTop ${products.size} products:\n${products.mkString("\n")}")
@@ -37,6 +34,13 @@ object SparkRdd extends App {
       val countriesResult = exportSumTable(countries, countriesSql, conn)
       println(s"Inserted top $countriesResult countries")
     }
+  }
+
+
+  def withSpark(body: SparkContext => Unit): Unit = {
+    val conf = new SparkConf().setAppName(settings.appName)
+    val sc = new SparkContext(conf)
+    try body(sc) finally sc.stop()
   }
 
   def parseEvents(sc: SparkContext): RDD[Event] = {
