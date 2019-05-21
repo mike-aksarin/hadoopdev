@@ -1,4 +1,4 @@
-# Hadoop Ecosystem Example
+# Hadoop Developer Example
 
 This is a final task for a Hadoop Developers gridU course.
 
@@ -23,7 +23,7 @@ Producer should connect to Flume socket (see below) and send events in a CSV for
 
 Product purchase event properties:
 
-| property         | distibution type requirement   | data requirement |
+| property         | distribution type requirement  | data requirement |
 |------------------|--------------------------------|------------------|
 | product name     | uniform                        | 
 | product price    | gaussian                       | 
@@ -64,7 +64,7 @@ Usage of https://www.maxmind.com/en/geoip2-country-database is prohibited.
 
 * Select top 10 countries with the highest money spending
 
-####Note
+#### Note
 
 Hive UDF might help you to join events with IP geo data
 
@@ -73,9 +73,9 @@ Hive UDF might help you to join events with IP geo data
 * Install and configure Sqoop
 * Put queries result from step 5 and 6 result to RDBMS. (Write down RDBMS tables creation scripts and Sqoop commands to export data)
 
-##8. Spark Core
+## 8. Spark Core
 
-####Note
+#### Note
 
 Use Scala for all spark connected code. It would be great to implement solution both in terms of RDDs and Datasets.
 
@@ -83,7 +83,7 @@ Use Scala for all spark connected code. It would be great to implement solution 
 
 Receive the same result as in steps 5-7 using Apache Spark instead of Hive.
 
-####Note
+#### Note
 
 Spark Streaming is not required in this task. Hive is not required as well. Spark should read and process CSV files from HDFS.
 
