@@ -75,7 +75,7 @@ object SparkRdd extends App {
     events
       .map(purchase => countryByIp(purchase.clientIp, countries) -> purchase.price)
       .filter(_._1.nonEmpty)
-      .aggregateByKey(BigDecimal(0))(_ + _, _ + _)
+      .reduceByKey( _ + _)
       .sortBy(_._2, ascending = false)
   }
 

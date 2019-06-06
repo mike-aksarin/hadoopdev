@@ -52,7 +52,7 @@ object SparkDataFrames extends App {
 
   private def countByField(events: Dataset[EventRow], field: String): DataFrame = {
     events
-      .groupBy(field)
+      .groupBy(field) // This (group by / count) combination causes inefficient repartitioning
       .count()
       .withColumnRenamed("count", "purchase_count")
       .orderBy(desc("purchase_count"))
@@ -68,7 +68,7 @@ object SparkDataFrames extends App {
       .join(countryByIpMask)
       .where(networkMatch(events("client_ip"), countryByIpMask(ipMask)))
       .select("product_price", countryName)
-      .groupBy(countryName)
+      .groupBy(countryName) // This (group by / sum) combination causes inefficient repartitioning and slows down drastically
       .sum("product_price")
       .withColumnRenamed("sum(product_price)", "spent_total")
       .orderBy(desc("spent_total"))
